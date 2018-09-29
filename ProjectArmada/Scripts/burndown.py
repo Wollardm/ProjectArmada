@@ -61,3 +61,4 @@ for member in sprint_tasks.keys():
          + " - Total Actual Time: "
          + str(acttime))
         
+input("Press Enter to Continue...\n")
