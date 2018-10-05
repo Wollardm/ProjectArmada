@@ -5,23 +5,22 @@
 import array
 #import math
 
-class vec2:
+class vec3:
     """
-        Its literally a vector 2
+        Its literally a 1x3 vector
     """
     def __init__(self, *args):
         if not args:
-            args = [0, 0]
-        print(args)
+            args = [0, 0, 0]
         L = []
         for a in args:
             if isinstance(a, float):
                 L.append(a)
             elif isinstance(a, int):
                 L.append(a)
-            elif isinstance(a) == vec2:
+            elif isinstance(a, vec3):
                 L += (a.x, a.y)
-            elif isinstance(a, list) or isinstance(a, tuple):
+            elif isinstance(a, (list, tuple)):
                 L += a
             elif isinstance(a, array.array):
                 L += [q for q in a]
@@ -29,8 +28,8 @@ class vec2:
                 raise RuntimeError("Bad argument to vec constructor: "
                                    + str(type(a)))
         if len(L) == 1:
-            L = L[0]*2
-        if len(L) != 2:
+            L = L[0]*3
+        if len(L) != 3:
             raise RuntimeError("Bad number of items to vec constructor")
         self._v = array.array("f", L)
 
@@ -41,7 +40,7 @@ class vec2:
         self._v[key] = value
 
     def __str__(self):
-        return "vec2(" + ",".join([str(q) for q in self._v])+")"
+        return "vec3(" + ",".join([str(q) for q in self._v])+")"
 
     def __repr__(self):
         return str(self)
@@ -50,56 +49,58 @@ class vec2:
         return 2
 
     def __add__(self, o):
-        if not isinstance(o, vec2):
-            return NotImplemented
-        L = []
-        for i in range(len(self._v)):
-            L.append(self._v[i] + o._v[i])
-        return vec2(L)
+        if isinstance(o, vec3):
+            L = []
+            for i in range(len(self._v)):
+                L.append(self._v[i] + o._v[i])
+            return vec3(L)
+        elif isinstance(o, tuple):
+            L = []
+            for i in range(len(self._v)):
+                L.append(self._v[i] + o[i])
+            return vec3(L)
+        return NotImplemented
 
     def __sub__(self, o):
-        if not isinstance(o, vec2):
+        if not isinstance(o, vec3):
             return NotImplemented
         L = []
         for i in range(len(self._v)):
             L.append(self._v[i] - o._v[i])
-        return vec2(L)
+        return vec3(L)
 
     def __mul__(self, o):
-        if isinstance(o, vec2):
-            R = vec2()
-            for i in range(2):
+        if isinstance(o, vec3):
+            R = vec3()
+            for i in range(3):
                 R[i] = self[i] * o[i]
             return R
-        elif isinstance(o, float) or isinstance(o, int):
-            R = vec2([q*o for q in self._v])
+        elif isinstance(o, (float, int)):
+            R = vec3([q*o for q in self._v])
             return R
         else:
             return NotImplemented
 
     def __rmul__(self, o):
         # o * self
-        if isinstance(o) == isinstance(self):
-            assert 0        #should never happen
-        elif isinstance(o, (float, int)):
-            R = vec2([q*o for q in self._v])
+        if isinstance(o, (float, int)):
+            R = vec3([q*o for q in self._v])
             return R
-        else:
-            return NotImplemented
+        return NotImplemented
 
     def __neg__(self):
-        return vec2([-q for q in self._v])
+        return vec3([-q for q in self._v])
 
     def __pos__(self):
-        return vec2([q for q in self._v])
+        return vec3([q for q in self._v])
 
     def __iter__(self):
         return self._v.__iter__()
 
     def __eq__(self, o):
-        if isinstance(o, vec2):
+        if isinstance(o, vec3):
             return False
-        for i in range(2):
+        for i in range(3):
             if self._v[i] != o._v[i]:
                 return False
         return True
@@ -123,12 +124,26 @@ class vec2:
 
     y = property(_gety, _sety)
 
+    def _getz(self):
+        return self._v[2]
+
+    def _setz(self, v):
+        self._v[2] = v
+
+    z = property(_getz, _setz)
+
     def tobytes(self):
         return self._v.tobytes()
 
-    def toftuple(self):
+    def to3ftuple(self):
+        return (self.x, self.y, self.z)
+
+    def to3ituple(self):
+        return (int(self.x), int(self.y), int(self.z))
+
+    def to2ftuple(self):
         return (self.x, self.y)
 
-    def toituple(self):
+    def to2ituple(self):
         return (int(self.x), int(self.y))
     

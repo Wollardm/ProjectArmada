@@ -1,8 +1,15 @@
 """
     Something Something.
+    # TODO: Create links to other nodes
+    # TODO: Add Name
+    # TODO: Add Description
+    # TODO: Add Modifiers
+    # TODO: Add Icons
+    # TODO: Render Icon
+    # TODO: Write to file
 """
 import pygame
-from utils import vec2
+from utils import vec3
 
 class TechNode:
     """
@@ -19,7 +26,7 @@ class TechNode:
         TechNode.node_count += 1
         self.name = ""
         self.dec = ""
-        self.pos = vec2(x, y)
+        self.pos = vec3(x, y, 1)
         self.selected = False
         self.type = "Something"
         self.connections = []
@@ -31,8 +38,10 @@ class TechNode:
         """
         pass
 
-    def render(self, screen):
+    # TODO: Make render use node icon
+    def render(self, screen, cam_pos):
         """
             Eventually get this to display a the node art maybe?.
         """
-        pygame.draw.circle(screen, (255, 0, 0), self.pos.toituple(), 20)
+        new_pos = self.pos - cam_pos
+        pygame.draw.circle(screen, (255, 0, 0), (new_pos.to2ituple()), 20)

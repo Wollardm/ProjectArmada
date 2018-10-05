@@ -4,12 +4,14 @@
 
 import pygame
 from technode import TechNode
+from utils import vec3
 
 
 WIDTH = 1200
 HEIGHT = 800
 
 root_nodes = set()
+camera_pos = vec3(0, 0, 1)
 
 # Pygame setup
 pygame.init()
@@ -22,15 +24,25 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            left, mid, right = pygame.mouse.get_pressed()
             mousepos = pygame.mouse.get_pos()
-            print(mousepos[0])
-
-            if left:
+            if event.button == 1:
                 root_nodes.add(TechNode(mousepos[0], mousepos[1]))
+        elif event.type == pygame.KEYDOWN:
+            pass
+
+    # TODO: Change to move with delta time
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        camera_pos += (0, -1, 0)
+    if keys[pygame.K_a]:
+        camera_pos += (-1, 0, 0)
+    if keys[pygame.K_s]:
+        camera_pos += (0, 1, 0)
+    if keys[pygame.K_d]:
+        camera_pos += (1, 0, 0)
 
     screen.fill((0, 0, 0))
     for node in root_nodes:
-        node.render(screen)
+        node.render(screen, camera_pos)
 
     pygame.display.flip()
