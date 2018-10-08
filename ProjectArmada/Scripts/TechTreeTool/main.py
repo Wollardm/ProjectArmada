@@ -1,5 +1,20 @@
 """
-    Should probably make a real docstring. Oh well.
+Should probably make a real docstring. Oh well.
+
+TODOLIST:
+[x] TODO: Change camera to move with delta time
+[x] TODO: Create links to other nodes
+[ ] TODO: Ability to select node and edit
+[ ] TODO: Add Name
+[ ] TODO: Add Description
+[ ] TODO: Add Costs
+[ ] TODO: Add Modifiers
+[ ] TODO: Add Icons
+[ ] TODO: Write to file
+[ ] TODO: Render Icon
+[ ] TODO: Display gris/axes
+[ ] TODO: Implement axis snap
+[ ] TODO: D O C S T R I N G S
 """
 
 import pygame
@@ -9,6 +24,7 @@ from utils import vec3
 
 WIDTH = 1200
 HEIGHT = 800
+CAM_SPEED = 600
 
 nodes = set()
 selected_node = None
@@ -19,9 +35,12 @@ camera_pos = vec3(0, 0, 1)
 # Pygame setup
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+clock.tick()
 
 running = True
 while running:
+    deltatime = clock.tick() / 1000.0
     mousepos = vec3(pygame.mouse.get_pos()) + camera_pos
 
     # Handle input, etc
@@ -54,16 +73,15 @@ while running:
         elif event.type == pygame.KEYDOWN:
             pass
 
-    # TODO: Change to move with delta time
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        camera_pos += (0, -1, 0)
+        camera_pos += (0, -CAM_SPEED * deltatime, 0)
     if keys[pygame.K_a]:
-        camera_pos += (-1, 0, 0)
+        camera_pos += (-CAM_SPEED * deltatime, 0, 0)
     if keys[pygame.K_s]:
-        camera_pos += (0, 1, 0)
+        camera_pos += (0, CAM_SPEED * deltatime, 0)
     if keys[pygame.K_d]:
-        camera_pos += (1, 0, 0)
+        camera_pos += (CAM_SPEED * deltatime, 0, 0)
 
     # Rendering
     screen.fill((0, 0, 0))

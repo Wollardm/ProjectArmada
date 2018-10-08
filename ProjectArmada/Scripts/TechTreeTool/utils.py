@@ -1,5 +1,5 @@
 """
-    Blah blah.
+Blah blah.
 """
 
 import array
@@ -7,7 +7,7 @@ import array
 
 class vec3:
     """
-        Its literally a 1x3 vector
+    Its literally a 1x3 vector
     """
     def __init__(self, *args):
         if not args:
@@ -136,61 +136,61 @@ class vec3:
 
     def tobytes(self):
         """
-            Also doing this to avoid bitching.
+        Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+        Args:
+        Returns:
+        Raises:
         """
         return self._v.tobytes()
 
     def to3ftuple(self):
         """
-            Also doing this to avoid bitching.
+        Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+        Args:
+        Returns:
+        Raises:
         """
-        return (self.x, self.y, self.z)
+        return (float(self.x), float(self.y), float(self.z))
 
     def to3ituple(self):
         """
-            Also doing this to avoid bitching.
+        Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+        Args:
+        Returns:
+        Raises:
         """
         return (int(self.x), int(self.y), int(self.z))
 
     def to2ftuple(self):
         """
-            Also doing this to avoid bitching.
+        Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+        Args:
+        Returns:
+        Raises:
         """
-        return (self.x, self.y)
+        return (float(self.x), float(self.y))
 
     def to2ituple(self):
         """
-            Also doing this to avoid bitching.
+        Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+        Args:
+        Returns:
+        Raises:
         """
         return (int(self.x), int(self.y))
 
 def dot(v, w):
     """
-            Also doing this to avoid bitching.
+    Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+    Args:
+    Returns:
+    Raises:
     """
     assert type(v) == type(w)
     assert isinstance(v, vec3)
@@ -198,11 +198,11 @@ def dot(v, w):
 
 def length(v):
     """
-            Also doing this to avoid bitching.
+    Also doing this to avoid bitching.
 
-            Args:
-            Returns:
-            Raises:
+    Args:
+    Returns:
+    Raises:
     """
     assert isinstance(v, vec3)
     return dot(v, v) ** 0.5
