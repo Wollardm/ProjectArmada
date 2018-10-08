@@ -3,14 +3,17 @@
 """
 
 import pygame
-from technode import TechNode
+from technode import *
 from utils import vec3
 
 
 WIDTH = 1200
 HEIGHT = 800
 
-root_nodes = set()
+nodes = set()
+selected_node = None
+start_node = None
+end_node = None
 camera_pos = vec3(0, 0, 1)
 
 # Pygame setup
@@ -19,14 +22,35 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 running = True
 while running:
+    mousepos = vec3(pygame.mouse.get_pos()) + camera_pos
+
+    # Handle input, etc
     ev = pygame.event.get()
     for event in ev:
         if event.type == pygame.QUIT:
             running = False
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            mousepos = pygame.mouse.get_pos()
             if event.button == 1:
-                root_nodes.add(TechNode(mousepos[0], mousepos[1]))
+                if not check_create_collision(nodes, mousepos):
+                    nodes.add(TechNode(mousepos[0], mousepos[1]))
+                else:
+                    selected_node = select_node_at(nodes, mousepos)
+            elif event.button == 3:
+                start_node = select_node_at(nodes, mousepos)
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            mousepos = vec3(pygame.mouse.get_pos()) + camera_pos
+            # Add the connections
+            if event.button == 3:
+                end_node = select_node_at(nodes, mousepos)
+                if start_node and end_node:
+                    start_node.connections.add(end_node)
+                    end_node.dependencies.add(start_node)
+
+                start_node = None
+                end_node = None
+
         elif event.type == pygame.KEYDOWN:
             pass
 
@@ -41,8 +65,14 @@ while running:
     if keys[pygame.K_d]:
         camera_pos += (1, 0, 0)
 
+    # Rendering
     screen.fill((0, 0, 0))
-    for node in root_nodes:
+    for node in nodes:
         node.render(screen, camera_pos)
+
+    if start_node and not end_node:
+        pygame.draw.line(screen, (0, 0, 255),
+                         (start_node.pos - camera_pos).to2ituple(),
+                         (mousepos - camera_pos).to2ituple())
 
     pygame.display.flip()

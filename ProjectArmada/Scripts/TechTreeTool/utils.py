@@ -19,7 +19,7 @@ class vec3:
             elif isinstance(a, int):
                 L.append(a)
             elif isinstance(a, vec3):
-                L += (a.x, a.y)
+                L += (a.x, a.y, a.z)
             elif isinstance(a, (list, tuple)):
                 L += a
             elif isinstance(a, array.array):
@@ -29,7 +29,9 @@ class vec3:
                                    + str(type(a)))
         if len(L) == 1:
             L = L[0]*3
-        if len(L) != 3:
+        while len(L) < 3:
+            L.append(0.0)
+        if len(L) > 3:
             raise RuntimeError("Bad number of items to vec constructor")
         self._v = array.array("f", L)
 
@@ -133,17 +135,74 @@ class vec3:
     z = property(_getz, _setz)
 
     def tobytes(self):
+        """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+        """
         return self._v.tobytes()
 
     def to3ftuple(self):
+        """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+        """
         return (self.x, self.y, self.z)
 
     def to3ituple(self):
+        """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+        """
         return (int(self.x), int(self.y), int(self.z))
 
     def to2ftuple(self):
+        """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+        """
         return (self.x, self.y)
 
     def to2ituple(self):
+        """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+        """
         return (int(self.x), int(self.y))
-    
+
+def dot(v, w):
+    """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+    """
+    assert type(v) == type(w)
+    assert isinstance(v, vec3)
+    return sum([v[i] * w[i] for i in range(len(v))])
+
+def length(v):
+    """
+            Also doing this to avoid bitching.
+
+            Args:
+            Returns:
+            Raises:
+    """
+    assert isinstance(v, vec3)
+    return dot(v, v) ** 0.5
