@@ -17,10 +17,11 @@ TODOLIST:
 [ ] TODO: D O C S T R I N G S
 """
 
+import tkinter
 import pygame
 from technode import *
+from fieldeditor import FieldEditor
 from utils import vec3
-
 
 WIDTH = 1200
 HEIGHT = 800
@@ -31,6 +32,8 @@ selected_node = None
 start_node = None
 end_node = None
 camera_pos = vec3(0, 0, 1)
+fe = FieldEditor(None)
+editor = None
 
 # Pygame setup
 pygame.init()
@@ -40,6 +43,7 @@ clock.tick()
 
 running = True
 while running:
+    fe.update()
     deltatime = clock.tick() / 1000.0
     mousepos = vec3(pygame.mouse.get_pos()) + camera_pos
 

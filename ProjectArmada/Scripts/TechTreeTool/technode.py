@@ -4,6 +4,7 @@ Something Something.
 import pygame
 from utils import vec3, length
 
+
 class TechNode:
     """
     Putting this so pylint doesn't bitch at me.
@@ -17,13 +18,14 @@ class TechNode:
         """
         self.ID = TechNode.node_count
         TechNode.node_count += 1
-        self.name = ""
-        self.dec = ""
-        self.mod = ""
+        self.name = "None"
+        self.dec = "None"
+        self.mod = "None"
+        self.type = "None"
+        self.flavor = "None\n-Nobody"
         self.pos = vec3(x, y, 1)
         self.radius = 20
         self.selected = False
-        self.type = "Something"
         self.connections = set()
         self.dependencies = set()
         self.color = (255, 0, 0)
