@@ -19,10 +19,11 @@ class TechNode:
         self.ID = TechNode.node_count
         TechNode.node_count += 1
         self.name = "None"
-        self.dec = "None"
-        self.mod = "None"
+        self.dec = "None."
+        self.mods = []
+        self.techs = []
         self.type = "None"
-        self.flavor = "None\n-Nobody"
+        self.flavor = "None.\n-Nobody"
         self.pos = vec3(x, y, 1)
         self.radius = 20
         self.selected = False
@@ -31,8 +32,7 @@ class TechNode:
         self.color = (255, 0, 0)
 
     def write_to_file(self, filename):
-        """
-        Also doing this to avoid bitching.
+        """Also doing this to avoid bitching.
 
         Args:
         Returns:
@@ -41,8 +41,9 @@ class TechNode:
         pass
 
     def render(self, screen, cam_pos):
-        """
-        Draws the node onto the screen & any connections it has with other
+        """Draws the node.
+
+        Renders the node onto the screen & any connections it has with other
         nodes. Must translate from world space to screen space using the
         camera's position.
 
@@ -65,7 +66,8 @@ class TechNode:
 
 
 def check_collision(node, mousepos, pad=0):
-    """
+    """Node & Mouse collision.
+
     Checks if there will be a collision with the given node and the
     given position.
 
@@ -85,7 +87,8 @@ def check_collision(node, mousepos, pad=0):
     return False
 
 def check_create_collision(nodes, mousepos):
-    """
+    """Node creation collision.
+
     Checks if there will be a collision with the node created at the
     current position and any other node.
 
@@ -104,8 +107,7 @@ def check_create_collision(nodes, mousepos):
     return False
 
 def select_node_at(nodes, mousepos):
-    """
-    Selected the node at the given position, if any.
+    """Selected the node at the given position, if any.
 
     Args:
         nodes (list): List of all nodes

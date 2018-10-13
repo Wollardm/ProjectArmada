@@ -1,20 +1,20 @@
 """
 Should probably make a real docstring. Oh well.
 
-TODOLIST:
-[x] TODO: Change camera to move with delta time
-[x] TODO: Create links to other nodes
-[ ] TODO: Ability to select node and edit
-[ ] TODO: Add Name
-[ ] TODO: Add Description
-[ ] TODO: Add Costs
-[ ] TODO: Add Modifiers
-[ ] TODO: Add Icons
-[ ] TODO: Write to file
-[ ] TODO: Render Icon
-[ ] TODO: Display gris/axes
-[ ] TODO: Implement axis snap
-[ ] TODO: D O C S T R I N G S
+Todo:
+    * [x] TODO: Change camera to move with delta time
+    * [x] TODO: Create links to other nodes
+    * [ ] TODO: Ability to select node and edit
+    * [x] TODO: Add Name
+    * [x] TODO: Add Description
+    * [ ] TODO: Add Costs
+    * [ ] TODO: Add Modifiers
+    * [x] TODO: Add Icon
+    * [ ] TODO: Write to file
+    * [ ] TODO: Render Icon
+    * [ ] TODO: Display gris/axes
+    * [ ] TODO: Implement axis snap
+    * [ ] TODO: D O C S T R I N G S
 """
 
 import tkinter
@@ -63,7 +63,6 @@ while running:
                 start_node = select_node_at(nodes, mousepos)
 
         elif event.type == pygame.MOUSEBUTTONUP:
-            mousepos = vec3(pygame.mouse.get_pos()) + camera_pos
             # Add the connections
             if event.button == 3:
                 end_node = select_node_at(nodes, mousepos)
